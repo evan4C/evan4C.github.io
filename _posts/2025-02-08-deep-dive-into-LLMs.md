@@ -56,7 +56,7 @@ Why training cost drops so quickly?
 2. computers have gotten much faster
 3. software has gotten much efficient
 
-![screenshot-training-GPT-2](/assets/imgs/screenshot-training-GPT-2.png)
+![screenshot-training-GPT-2](/assets/img/screenshot-training-GPT-2.png)
 
 截图中的每一行代表一次模型的参数更新，每一次更新会从dataset中提取**1m token**作为输入，时长大约为7s，总共需完成32000次更新。可以看出，随着参数更新的进行，模型的损失在逐渐降低。完成20次更新后，模型会进行一次推理，用于检验模型的生成效果。
 
@@ -215,7 +215,7 @@ RL的实际流程：
 一些常用的Reasoning model：D[eepSeek-R1-Zero](https://chat.deepseek.com), [chatGPT o1](https://chatgpt.com), [Gemini 2.0 Flash Thinking Experimental](https://aistudio.google.com/prompts/new_chat)
 
 另一个经典的强化学习例子是2017年的[AlphaGO](https://ics.uci.edu/~dechter/courses/ics-295/winter-2018/papers/nature-go.pdf)，在其研究论文中，研究者发现，如果只采用Supervised learning，即让AI学习和模拟人类顶级选手是如何下棋的，即使经过长时间的训练，AI的水平也只能接近于人类顶级选手的水平，而无法超越人类顶级选手。但是利用Reinforcement learning，AI的下棋水平便可以超过人类顶级选手。
-![AlphaGO-Zero](/assets/imgs/AlphaGO-Zero-training-results.png)
+![AlphaGO-Zero](/assets/img/AlphaGO-Zero-training-results.png)
 
 ### RL-HF: RL in un-verifiable domains
 
