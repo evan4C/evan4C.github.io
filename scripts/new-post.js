@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const { exec } = require('child_process');
 
 // 日期处理
 const today = new Date();
@@ -16,10 +17,11 @@ const categoriesOptions = {
   3: 'car',
   4: 'productivity',
   5: 'investment',
-  6: 'life, introspect',
-  7: 'life, principles',
-  8: 'life, reading',
-  9: 'life, workout',
+  6: 'life',
+  7: 'life, introspect',
+  8: 'life, principles',
+  9: 'life, reading',
+  10: 'life, workout',
 };
 
 // 命令行接口
@@ -75,5 +77,7 @@ tags: [${tags.join(', ')}]
   fs.writeFileSync(outputPath, content);
 
   console.log(`\n✅ 已创建文件：_posts/${fileName}`);
+
+  exec(`code "${outputPath}"`);
   rl.close();
 })();
