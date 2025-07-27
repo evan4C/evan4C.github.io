@@ -1,40 +1,40 @@
 ---
-title: Debugging and Profiling 
+title: Debugging and Profiling
 date: 2025-03-22
 categories: [SWE]
 tags: [debug, profile, Linux, MIT]
 ---
 
-debug是为了找出code中的错误，profile是为了优化code的性能（测量和分析code占用的时间和内存）。
+debug 是为了找出 code 中的错误，profile 是为了优化 code 的性能（测量和分析 code 占用的时间和内存）。
 
 ## Debug
 
 ### 1. printf debugging and logging
 
-最简单的debug方法就是在code内添加printf语句，在控制台打印出相关的debug信息。其次是使用log，在文件内记录code运行中的debug信息。
+最简单的 debug 方法就是在 code 内添加 printf 语句，在控制台打印出相关的 debug 信息。其次是使用 log，在文件内记录 code 运行中的 debug 信息。
 
-在Python中可以通过导入logging库来实现log功能。
+在 Python 中可以通过导入 logging 库来实现 log 功能。
 
-如何在terminal中打印出彩色字体？
+如何在 terminal 中打印出彩色字体？
 
-terminal使用**ANSI escape codes**来控制字体的颜色，例如下面的代码将打印出红色字体
+terminal 使用**ANSI escape codes**来控制字体的颜色，例如下面的代码将打印出红色字体
 
 ```bash
 echo -e "\e[38;2;255;0;0mThis is red\e[0m"
 ```
 
-- 在UNIX系统中，程序的log通常保存在`/var/log`目录下
-- 在UNIX系统中，可以使用`dmesg`命令来访问内核log
-- 对于Linux系统，可以使用`journalctl`来显示系统级log，其文件保存在`/var/log/journal`目录下
-- 对于Mac系统，可以使用`log show`命令来显示系统级log，其文件保存在`/var/log/system.log/`内
+- 在 UNIX 系统中，程序的 log 通常保存在`/var/log`目录下
+- 在 UNIX 系统中，可以使用`dmesg`命令来访问内核 log
+- 对于 Linux 系统，可以使用`journalctl`来显示系统级 log，其文件保存在`/var/log/journal`目录下
+- 对于 Mac 系统，可以使用`log show`命令来显示系统级 log，其文件保存在`/var/log/system.log/`内
 
-在Shell环境下，使用`logger`命令可以向系统级log中添加log信息。使用`lnav`工具可以改善log的展示方式从而优化阅读体验。
+在 Shell 环境下，使用`logger`命令可以向系统级 log 中添加 log 信息。使用`lnav`工具可以改善 log 的展示方式从而优化阅读体验。
 
 ### 2. Debugger
 
-debugger可以添加断点，在程序运行到某一行时中止程序的继续运行，以便查看debug信息。
+debugger 可以添加断点，在程序运行到某一行时中止程序的继续运行，以便查看 debug 信息。
 
-Python常用的debugger是`pdb`或者其改进版`ipdb`，其支持的常用命令如下：
+Python 常用的 debugger 是`pdb`或者其改进版`ipdb`，其支持的常用命令如下：
 
 - l(ist) - Displays 11 lines around the current line or continue the previous listing.
 - s(tep) - Execute the current line, stop at the first possible occasion.
@@ -44,11 +44,11 @@ Python常用的debugger是`pdb`或者其改进版`ipdb`，其支持的常用命�
 - r(eturn) - Continue execution until the current function returns.
 - q(uit) - Quit the debugger.
 
-对于更加底层的debug，可以使用`gdb`或其改进版`pwndgb`，`lldb`等工具，这些工具可以让你查看有关寄存器、内存、计数器等debug信息。
+对于更加底层的 debug，可以使用`gdb`或其改进版`pwndgb`，`lldb`等工具，这些工具可以让你查看有关寄存器、内存、计数器等 debug 信息。
 
 ### 3. Special Tool
 
-即使当你在debug某些black-box的二进制程序，你也可以利用一些特殊工具来辅助你。例如，程序必须要使用system call来执行某些需要内核才能完成的操作，你可以使用`strace`(Linux)或`dtruss`(Mac)对这些system calls进行追踪。
+即使当你在 debug 某些 black-box 的二进制程序，你也可以利用一些特殊工具来辅助你。例如，程序必须要使用 system call 来执行某些需要内核才能完成的操作，你可以使用`strace`(Linux)或`dtruss`(Mac)对这些 system calls 进行追踪。
 
 ```bash
 # On Linux
@@ -57,11 +57,11 @@ sudo strace -e lstat ls -l > /dev/null
 sudo dtruss -t lstat64_extended ls -l > /dev/null
 ```
 
-如果需要对网络通信进行debug，则可以使用`tcpdump`、`Wireshark`等工具，也可以利用浏览器自带的审查工具进行debug。
+如果需要对网络通信进行 debug，则可以使用`tcpdump`、`Wireshark`等工具，也可以利用浏览器自带的审查工具进行 debug。
 
 ### 4. Static Analysis
 
-除了在发生问题时进行debug之外，你还可以利用一些代码检查工具在问题发生之前对你的代码进行检查。
+除了在发生问题时进行 debug 之外，你还可以利用一些代码检查工具在问题发生之前对你的代码进行检查。
 
 ```bash
 # check your python code
@@ -73,28 +73,28 @@ mypy foobar.py
 shellcheck hello.sh
 ```
 
-绝大多数编辑器或IDE支持实时代码检查，对于vim，可以使用`ale`、`syntastic`插件。
+绝大多数编辑器或 IDE 支持实时代码检查，对于 vim，可以使用`ale`、`syntastic`插件。
 
 ## Profiling
 
-即使你的代码功能上没有任何问题，但如果它占用过多的内存或运行过慢，它可能也不是一个好的程序。使用profiler和monitor工具，可以帮你发现程序的这些缺点。
+即使你的代码功能上没有任何问题，但如果它占用过多的内存或运行过慢，它可能也不是一个好的程序。使用 profiler 和 monitor 工具，可以帮你发现程序的这些缺点。
 
 ### 1. Timing
 
-通常情况下，添加一个计时器可以帮助你快速确认程序的性能，但是简单的计时器结果可能会具有误导性，因为你的电脑可能同时在运行其它进程。因此，为了准确衡量时间，需要首先区分3个时间概念：
+通常情况下，添加一个计时器可以帮助你快速确认程序的性能，但是简单的计时器结果可能会具有误导性，因为你的电脑可能同时在运行其它进程。因此，为了准确衡量时间，需要首先区分 3 个时间概念：
 
 1. Real - Wall clock elapsed time from start to finish of the program, including the time taken by other processes and time taken while blocked (e.g. waiting for I/O or network)
 2. User - Amount of time spent in the CPU running user code
 3. Sys - Amount of time spent in the CPU running kernel code
 
-大多数情况下，当人们提到profiler时，通常指的是 CPU profiler，CPU profiler主要分为两种类型：
+大多数情况下，当人们提到 profiler 时，通常指的是 CPU profiler，CPU profiler 主要分为两种类型：
 
-- 跟踪profiler（tracing profilers）：记录程序执行过程中每一个函数调用
-- 采样profiler（sampling profilers）：周期性地（通常每毫秒一次）对程序进行探测，并记录当时的调用堆栈。
+- 跟踪 profiler（tracing profilers）：记录程序执行过程中每一个函数调用
+- 采样 profiler（sampling profilers）：周期性地（通常每毫秒一次）对程序进行探测，并记录当时的调用堆栈。
 
-profiler利用这些记录来呈现程序耗时最多的部分的汇总统计信息。
+profiler 利用这些记录来呈现程序耗时最多的部分的汇总统计信息。
 
-对于Python，可以使用`cProfile`来记录每次函数调用的时间，或者使用`kernprof`来检测每一行代码的运行时间。
+对于 Python，可以使用`cProfile`来记录每次函数调用的时间，或者使用`kernprof`来检测每一行代码的运行时间。
 
 ```bash
 python -m cProfile -s tottime grep.py 1000 '^(import|\s*def)[^,]*$' *.py
